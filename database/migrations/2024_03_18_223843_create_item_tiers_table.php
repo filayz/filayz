@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('item_tiers', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\Tier::class);
+            $table->foreignIdFor(\App\Models\Item::class);
             $table->timestamps();
         });
     }

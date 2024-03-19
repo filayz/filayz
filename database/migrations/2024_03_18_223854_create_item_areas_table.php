@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('item_areas', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignIdFor(\App\Models\Item::class);
+            $table->foreignIdFor(\App\Models\Item\Area::class);
+
             $table->timestamps();
         });
     }

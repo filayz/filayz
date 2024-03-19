@@ -11,11 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('lootboxes', function (Blueprint $table) {
             $table->id();
 
             $table->string('name');
-            $table->string('description')->nullable();
+
+            $table->boolean('allow_forcing_access')->default(false);
+            $table->boolean('shines_light')->default(false);
+            $table->float('loot_spawn_chance');
+
+            $table->foreignIdFor(\App\Models\Server::class);
+            $table->foreignIdFor(\App\Models\Key::class);
 
             $table->timestamps();
         });
@@ -26,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('lootboxes');
     }
 };

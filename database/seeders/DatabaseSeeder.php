@@ -16,5 +16,8 @@ class DatabaseSeeder extends Seeder
         $this->call(ModFileSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(ServerSeeder::class);
+        $this->call(AreaSeeder::class);
+        $this->call(CategorySeeder::class);
+        $this->call(TierSeeder::class);
     }
 }

@@ -2,6 +2,12 @@
 
 namespace App\Models\Item;
 
-class Category
+use Illuminate\Database\Eloquent\Model;
+
+/**
+ * @property int $id
+ * @property string $name
+ */
+class Category extends Model
 {
 }

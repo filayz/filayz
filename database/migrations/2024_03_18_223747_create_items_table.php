@@ -13,6 +13,21 @@ return new class extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
+
+            $table->string('name');
+            $table->longText('description')->nullable();
+            $table->foreignIdFor(\App\Models\Mod::class);
+            $table->foreignIdFor(\App\Models\Key::class);
+            $table->foreignIdFor(\App\Models\Server::class)->nullable();
+
+            $table->integer('nominal');
+            $table->integer('lifetime');
+            $table->integer('restock');
+            $table->unsignedInteger('min');
+            $table->integer('quantmin');
+            $table->integer('quantmax');
+            $table->unsignedInteger('cost');
+
             $table->timestamps();
         });
     }

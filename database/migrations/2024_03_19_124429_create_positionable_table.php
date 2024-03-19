@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('positionable', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name');
-            $table->string('description')->nullable();
+            $table->foreignIdFor(\App\Models\Position::class);
+            $table->string('positionable_type');
+            $table->unsignedBigInteger('positionable_id');
 
             $table->timestamps();
         });
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('positionable');
     }
 };

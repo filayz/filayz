@@ -24,6 +24,7 @@ class PositionResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')->required(),
+                Forms\Components\Select::make('mission')->options(resolve('missions'))->required(),
                 Forms\Components\Section::make('coordinates from P')
                     ->visible(fn (Forms\Get $get) => empty($get('x')))
                     ->schema([
