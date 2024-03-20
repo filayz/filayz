@@ -42,6 +42,13 @@ class ModObserver
                         'nominal', 'lifetime', 'restock',
                         'min', 'quantmin', 'quantmax', 'cost'
                     ]);
+dump($type);
+                    $flags = Arr::get($type, 'flags.@attributes', []);
+
+                    $attributes = array_merge(
+                        $attributes,
+                        $flags
+                    );
 
                     $attributes['name'] = Arr::get($type, '@attributes.name');
 
@@ -63,10 +70,17 @@ class ModObserver
                     // Sync the areas from the file
                     $areas = collect(Arr::get($type, 'usage', []))
                         ->map(fn (array $usage) => Arr::get($usage, '@attributes.name'));
-
                     $item->areas()->sync(
                         Area::query()->whereIn('name', $areas)->pluck('id')
                     );
+
+                    $categories = collect(Arr::get($type, 'category', []))
+                        ->map(fn (array $usage) => Arr::get($usage, '@attributes.name'));
+                    $item->categories()->sync(
+                        Item\Category::query()->whereIn('name', $categories)->pluck('id')
+                    );
+
+
                 }
             });
     }

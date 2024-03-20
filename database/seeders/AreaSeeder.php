@@ -12,13 +12,17 @@ class AreaSeeder extends Seeder
         'Town', 'Office', 'School', 'Village',
         'Firefighter', 'Hunting', 'Coast',
         'Industrial', 'Underground', 'Crypt',
-        'Medic', 'Lunapark'
+        'Medic', 'Lunapark', 'Farm'
     ];
 
     public function run(): void
     {
         foreach ($this->usages as $usage) {
-            DB::table('areas')->insert(['name' => $usage]);
+            if (DB::table('areas')->where('name', $usage)->exists()) continue;
+
+            DB::table('areas')->insert(
+                values: ['name' => $usage]
+            );
         }
     }
 }

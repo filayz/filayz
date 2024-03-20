@@ -40,6 +40,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class Item extends Model
 {
+    protected $casts = [
+        'count_in_carge' => 'boolean',
+        'count_in_hoarder' => 'boolean',
+        'count_in_map' => 'boolean',
+        'count_in_player' => 'boolean',
+        'crafted' => 'boolean',
+        'deloot' => 'boolean',
+    ];
+
     public function mod(): BelongsTo
     {
         return $this->belongsTo(Mod::class);
