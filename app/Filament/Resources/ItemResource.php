@@ -63,6 +63,21 @@ class ItemResource extends Resource
                             ->multiple()
                             ->preload()
                             ->relationship('tiers', 'name', fn (Builder $query) => $query->orderBy('name', 'asc'))
+                    ]),
+                Forms\Components\Section::make('Nominal and min values apply to')
+                    ->schema([
+                        Forms\Components\Toggle::make('count_in_cargo')
+                            ->label('Includes items in cargo (backpacks, crates, cars).'),
+                        Forms\Components\Toggle::make('count_in_hoarder')
+                            ->label('Includes items in cargo (tents, barrels, stashes etc).'),
+                        Forms\Components\Toggle::make('count_in_map')
+                            ->label('Includes items inside buildings.'),
+                        Forms\Components\Toggle::make('count_in_player')
+                            ->label('Includes items in players inventory.'),
+                        Forms\Components\Toggle::make('crafted')
+                            ->label('Mark a player craftable item only.'),
+                        Forms\Components\Toggle::make('deloot')
+                            ->label('Dynamic event loot such as a heli crash.'),
                     ])
             ]);
     }

@@ -31,6 +31,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property int $quantmin
  * @property int $quantmax
  * @property int $cost
+ * @property bool $count_in_cargo
+ * @property bool $count_in_hoarder
+ * @property bool $count_in_map
+ * @property bool $count_in_player
+ * @property bool $crafted
+ * @property bool $deloot
  */
 class Item extends Model
 {
