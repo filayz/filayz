@@ -65,7 +65,8 @@ class ModResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\FilesRelationManager::class
+            RelationManagers\FilesRelationManager::class,
+            RelationManagers\ItemsRelationManager::class,
         ];
     }
 

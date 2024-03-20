@@ -242,12 +242,15 @@ class ServiceCommand extends Command implements Isolatable
 
         $output = Str::after($output, $m[0]);
 
+        // Replace partial timestamps that are still showing in the logs.
+        $output = preg_replace('~^[0-9]{2}:[0-9]{2} ~', '', $output);
+
         $output = trim($output);
 
         if ($server
             ->logs()
             ->where('mute', true)
-            ->where('contents', '%', $output)
+            ->where('contents', 'like', "%$output%")
             ->exists()) {
             // we ignore muted duplicates
 

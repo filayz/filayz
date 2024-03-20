@@ -3,9 +3,12 @@
 namespace App\Listeners;
 
 use App\Enums\ModFileType;
+use App\Models\Item;
+use App\Models\Item\Area;
 use App\Models\Mod;
 use App\Models\ModFile;
-use Sabre\Xml\Service;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Symfony\Component\DomCrawler\Crawler;
 
 class ModObserver
@@ -28,17 +31,37 @@ class ModObserver
         // files
         $mod->files()
             ->where('type', ModFileType::xml_types)
-            ->each(function (ModFile $file) {
-                // Parse the xml to push them into items if they don't exist yet.
-                $xml = file_get_contents($file->full_path);
+            ->each(function (ModFile $file) use ($mod) {
+                $types = $file->readXML();
 
-                $reader = new Service();
+                $types = Arr::get($types, 'type', $types);
 
-                dd($reader->parse($xml));
+                foreach ($types as $type) {
+                    $attributes = Arr::only($type, [
+                        'nominal', 'lifetime', 'restock',
+                        'min', 'quantmin', 'quantmax', 'cost'
+                    ]);
 
-                $crawler = new Crawler($xml);
+                    $attributes['name'] = Arr::get($type, '@attributes.name');
 
-                $crawler->children('type')->each(fn (Crawler $node) => dd($node));
+                    $attributes['mod_id'] = $mod->id;
+
+                    /** @var Item $item */
+                    $item = $mod->items()->firstOrNew(
+                        Arr::only($attributes, ['mod_id', 'name', 'server_id']),
+                        $attributes
+                    );
+
+                    $item->save();
+
+                    // Sync the areas from the file
+                    $areas = collect(Arr::get($type, 'usage', []))
+                        ->map(fn (array $usage) => Arr::get($usage, '@attributes.name'));
+
+                    $item->areas()->sync(
+                        Area::query()->whereIn('name', $areas)->pluck('id')
+                    );
+                }
             });
     }
 }

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 /**
  * @property int $mod_id
@@ -53,5 +54,37 @@ class ModFile extends Model
                 };
             }
         );
+    }
+
+    public function readXML(): ?array
+    {
+        $path = $this->full_path;
+
+        if (! $path) return null;
+
+        $xml = file_get_contents($path);
+
+        $xml = Str::after($xml, "<types>") ?? $xml;
+        $xml = Str::beforeLast($xml, "</types>") ?? $xml;
+
+        // Incorrect opening tag, yes you paragon storage!
+        if (Str::startsWith($xml, '</')) {
+            $xml = preg_replace('~^\Q</\E([^>]+)>~', '', $xml);
+        }
+
+        $xml = trim($xml);
+
+        $xml = str_replace("\type>", "\t</type>", $xml);
+
+        // Incorrect closing tag, or missing one, yes you paragon storage!
+        if (Str::contains($xml, 'type')
+            && Str::startsWith($xml, '<type')
+            && !Str::endsWith($xml, '</type>')) {
+            $xml .= "\n</type>";
+        }
+
+        $xml = simplexml_load_string("<types>$xml</types>");
+
+        return json_decode(json_encode($xml), true);
     }
 }

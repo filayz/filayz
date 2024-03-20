@@ -36,7 +36,7 @@ class ModsRelationManager extends RelationManager
                 Tables\Columns\ImageColumn::make('image'),
                 Tables\Columns\ToggleColumn::make('enabled')
                     ->sortable()
-                    ->afterStateUpdated(fn (bool $state, Mod $record) =>  $state ? $this->copyModFileContents($record) : null),
+                    ->afterStateUpdated(fn (bool $state, Mod $record) =>  $state ? $this->attachedMod($record) : null),
                 Tables\Columns\TextColumn::make('name')->sortable()->searchable(),
             ])
             ->filters([
@@ -47,7 +47,7 @@ class ModsRelationManager extends RelationManager
                 Tables\Actions\AttachAction::make()
                     ->preloadRecordSelect()
                     ->recordSelectSearchColumns(['name', 'description'])
-                    ->after(fn (Mod $record) => $this->copyModFileContents($record)),
+                    ->after(fn (Mod $record) => $this->attachedMod($record)),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make()
@@ -59,13 +59,30 @@ class ModsRelationManager extends RelationManager
                         shouldOpenInNewTab: true
                     ),
                 Tables\Actions\DetachAction::make()
-                    ->after(fn (Mod $record) => $this->disableModFileEdit($record)),
+                    ->after(fn (Mod $record) => $this->detachedMod($record)),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
 //                    Tables\Actions\DetachBulkAction::make(),
                 ]),
             ]);
+    }
+
+    protected function attachedMod(Mod $record): void
+    {
+        $this->copyModFileContents($record);
+        $this->registerModItems($record);
+    }
+
+    protected function detachedMod(Mod $record): void
+    {
+        $this->disableModFileEdit($record);
+        $this->unRegisterModItems($record);
+    }
+
+    protected function registerModItems(Mod $record): void
+    {
+        $record->files;
     }
 
     protected function copyModFileContents(Mod $record): void

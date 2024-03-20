@@ -16,7 +16,6 @@
         "laravel/tinker": "^2.8",
         "league/pipeline": "^1.0",
         "livewire/livewire": "^3.4",
-        "sabre/xml": "^4.0",
         "symfony/dom-crawler": "^7.0",
         "xpaw/php-source-query-class": "^2.1"
     },
