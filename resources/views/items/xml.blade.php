@@ -25,6 +25,6 @@
     @endforeach
     @foreach($item->areas as $area)
     <usage name="{{ $area->name }}"/>
-        
+
     @endforeach
 </type>

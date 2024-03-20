@@ -28,25 +28,40 @@ class ServerResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name'),
                 Forms\Components\Select::make('mission_id')->required()->relationship('mission', 'name'),
-                Forms\Components\TextInput::make('ip_address')->ip()->required(),
-                Forms\Components\TextInput::make('port_game')->integer()->default(2302)->required(),
-                Forms\Components\TextInput::make('port_sftp')->integer()->default(2224)->required(),
-                Forms\Components\TextInput::make('port_reserved')->integer()->default(2303),
-                Forms\Components\TextInput::make('port_battl_eye')->integer()->default(2304)->required(),
-                Forms\Components\TextInput::make('port_steam_query')->integer()->default(27016)->required(),
-                Forms\Components\TextInput::make('port_rcon')->integer()->default(2305)->required(),
+                Forms\Components\TextInput::make('player_slots')->integer()->minValue(1)->required(),
                 Forms\Components\TextInput::make('fps_limit')->integer()->default(150)->minValue(60)->maxValue(300)->required(),
                 Forms\Components\TextInput::make('cpu_count')->integer()->minValue(1)->maxValue(resolve('cpuCores'))->required(),
-                Forms\Components\TextInput::make('player_slots')->integer()->minValue(1)->required(),
-                Forms\Components\TextInput::make('password_rcon')->required(),
-                Forms\Components\TextInput::make('password_admin')->maxLength(32)->required(),
-                Forms\Components\Toggle::make('third_person_enabled')->default(true),
-                Forms\Components\Toggle::make('voice_enabled')->default(true),
-                Forms\Components\Toggle::make('crosshair_enabled')->default(true),
-                Forms\Components\Toggle::make('personal_light_enabled')->default(true),
-
-                Forms\Components\TextInput::make('time_day_speed')->integer()->default(12)->minValue(0)->maxValue(24)->required(),
-                Forms\Components\TextInput::make('time_night_speed')->integer()->default(1)->minValue(1)->maxValue(64)->required(),
+                Forms\Components\Section::make('Ip and ports')
+                    ->columns(3)
+                    ->schema([
+                        Forms\Components\TextInput::make('ip_address')->ip()->required(),
+                        Forms\Components\TextInput::make('port_game')->integer()->default(2302)->required(),
+                        Forms\Components\TextInput::make('port_sftp')->integer()->default(2224)->required(),
+                        Forms\Components\TextInput::make('port_reserved')->integer()->default(2303),
+                        Forms\Components\TextInput::make('port_battl_eye')->integer()->default(2304)->required(),
+                        Forms\Components\TextInput::make('port_steam_query')->integer()->default(27016)->required(),
+                        Forms\Components\TextInput::make('port_rcon')->integer()->default(2305)->required(),
+                    ]),
+                Forms\Components\Section::make('Password')
+                    ->columns(2)
+                    ->schema([
+                        Forms\Components\TextInput::make('password_rcon')->required(),
+                        Forms\Components\TextInput::make('password_admin')->maxLength(32)->required(),
+                    ]),
+                Forms\Components\Section::make('Features')
+                    ->columns(4)
+                    ->schema([
+                        Forms\Components\Toggle::make('third_person_enabled')->default(true),
+                        Forms\Components\Toggle::make('voice_enabled')->default(true),
+                        Forms\Components\Toggle::make('crosshair_enabled')->default(true),
+                        Forms\Components\Toggle::make('personal_light_enabled')->default(true),
+                    ]),
+                Forms\Components\Section::make('Time')
+                    ->columns(2)
+                    ->schema([
+                        Forms\Components\TextInput::make('time_day_speed')->integer()->default(12)->minValue(0)->maxValue(24)->required(),
+                        Forms\Components\TextInput::make('time_night_speed')->integer()->default(1)->minValue(1)->maxValue(64)->required(),
+                    ])
             ]);
     }
 
