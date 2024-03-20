@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Listeners\MissionObserver;
 use App\Listeners\ModFileObserver;
 use App\Listeners\ModObserver;
+use App\Models\Mission;
 use App\Models\Mod;
 use App\Models\ModFile;
 use App\Server\Provisioner;
@@ -39,6 +41,7 @@ class AppServiceProvider extends ServiceProvider
                 ->mapWithKeys(fn (string $dir, $_) => [basename($dir) => basename($dir)]);
         });
 
+        Mission::observe(MissionObserver::class);
         Mod::observe(ModObserver::class);
         ModFile::observe(ModFileObserver::class);
     }

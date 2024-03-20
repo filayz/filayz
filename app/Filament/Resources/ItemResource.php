@@ -88,6 +88,8 @@ class ItemResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('description'),
+                Tables\Columns\TextColumn::make('mod.name')->sortable(),
+                Tables\Columns\TextColumn::make('mission.name')->sortable(),
                 Tables\Columns\TextColumn::make('server.name')->sortable(),
             ])
             ->filters([
@@ -98,6 +100,14 @@ class ItemResource extends Resource
                 Tables\Filters\SelectFilter::make('mod')
                     ->relationship(
                         'mod',
+                        'name',
+                        fn (Builder $query) => $query->whereHas('items')
+                    )
+                    ->searchable()
+                    ->preload(),
+                Tables\Filters\SelectFilter::make('mission')
+                    ->relationship(
+                        'mission',
                         'name',
                         fn (Builder $query) => $query->whereHas('items')
                     )

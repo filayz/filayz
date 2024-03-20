@@ -27,7 +27,7 @@ class ServerResource extends Resource
             ->columns(3)
             ->schema([
                 Forms\Components\TextInput::make('name'),
-                Forms\Components\Select::make('mission')->options(resolve('missions'))->required(),
+                Forms\Components\Select::make('mission_id')->required()->relationship('mission', 'name'),
                 Forms\Components\TextInput::make('ip_address')->ip()->required(),
                 Forms\Components\TextInput::make('port_game')->integer()->default(2302)->required(),
                 Forms\Components\TextInput::make('port_sftp')->integer()->default(2224)->required(),
@@ -59,6 +59,7 @@ class ServerResource extends Resource
                     ->alignCenter()
                     ->boolean(),
                 Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('mission.name'),
                 Tables\Columns\TextColumn::make('port_game'),
                 Tables\Columns\TextColumn::make('enabled_mods_count')
                     ->alignCenter()

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -18,7 +19,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $pid
  * @property string $name
  * @property string $path
- * @property string $mission
+ * @property int $mission_id
+ * @property Mission $mission
  * @property int $port_sftp
  * @property int $port_game
  * @property int $port_reserved
@@ -70,6 +72,11 @@ class Server extends Model
         'crosshair_enabled' => 'bool',
         'personal_light_enabled' => 'bool',
     ];
+
+    public function mission(): BelongsTo
+    {
+        return $this->belongsTo(Mission::class);
+    }
 
     public function mods(): BelongsToMany
     {

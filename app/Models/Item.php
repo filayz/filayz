@@ -16,6 +16,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string $description
  * @property int $mod_id
  * @property Mod $mod
+ * @property null|int $mission_id
+ * @property null|Mission $mission
  * @property null|int $server_id
  * @property Server $server
  * @property null|int $replaces_id
@@ -57,6 +59,11 @@ class Item extends Model
     public function server(): BelongsTo
     {
         return $this->belongsTo(Server::class);
+    }
+
+    public function mission(): BelongsTo
+    {
+        return $this->belongsTo(Mission::class);
     }
 
     public function replaces(): BelongsTo
