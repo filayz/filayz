@@ -18,6 +18,8 @@ enum ModFileType: string implements HasLabel
 
     public function editable(): bool
     {
+        if ($this->name !== self::xml_types->name) return false;
+
         return Str::contains($this->name, 'xml')
             || $this->name === self::profile->name;
     }

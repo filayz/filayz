@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Item\Area;
 use App\Models\Item\Category;
 use App\Models\Item\Tag;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -39,6 +40,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property bool $count_in_player
  * @property bool $crafted
  * @property bool $deloot
+ * @property string $xml
  */
 class Item extends Model
 {
@@ -121,5 +123,12 @@ class Item extends Model
         }
 
         return $cloned;
+    }
+
+    public function xml(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => view('items.xml', ['item' => $this])->render()
+        );
     }
 }

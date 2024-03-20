@@ -14,7 +14,7 @@ class Mission implements StageInterface
      */
     public function __invoke($payload): Server
     {
-        $missionPath = config('filesystems.disks.missions.root') . "/$payload->mission";
+        $missionPath = config('filesystems.disks.missions.root') . "/{$payload->mission->path}";
 
         if (is_link("$payload->path/mpmissions/")) {
             // Remove any potential symlinks.

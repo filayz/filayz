@@ -104,7 +104,7 @@ class ServerResource extends Resource
     {
         return [
             'Game Port' => $record->port_game,
-            'Mission' => $record->mission,
+            'Mission' => $record->mission->name,
         ];
     }
 }
