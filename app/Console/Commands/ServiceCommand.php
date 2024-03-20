@@ -106,7 +106,9 @@ class ServiceCommand extends Command implements Isolatable
         }
 
         $process = Process::command($args)
-            ->env(['CWD' => $server->path])
+            ->env([
+                'CWD' => $server->path,
+            ])
             ->path($server->path)
             ->idleTimeout(60 * 10)
             ->forever();

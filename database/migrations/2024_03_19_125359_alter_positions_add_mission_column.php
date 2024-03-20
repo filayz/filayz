@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('positions', function (Blueprint $table) {
-            $table->longText('mission')->after('name')->default('empty.deerisle');
+            $table->string('mission')->after('name')->default('empty.deerisle');
         });
     }
 
