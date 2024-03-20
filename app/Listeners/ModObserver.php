@@ -42,7 +42,7 @@ class ModObserver
                         'nominal', 'lifetime', 'restock',
                         'min', 'quantmin', 'quantmax', 'cost'
                     ]);
-dump($type);
+
                     $flags = Arr::get($type, 'flags.@attributes', []);
 
                     $attributes = array_merge(
