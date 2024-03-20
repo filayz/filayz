@@ -8,6 +8,7 @@ use App\Models\Item\Area;
 use App\Models\Mod;
 use App\Models\ModFile;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -43,6 +44,11 @@ class ModObserver
                     ]);
 
                     $attributes['name'] = Arr::get($type, '@attributes.name');
+
+                    if (empty($attributes['name'])) {
+                        Log::error("$file->full_path has missing name property on one of the items");
+                        return;
+                    }
 
                     $attributes['mod_id'] = $mod->id;
 

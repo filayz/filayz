@@ -47,6 +47,7 @@ class ItemResource extends Resource
                     ->columns(1)
                     ->schema([
                         Forms\Components\Select::make('areas')
+                            ->maxItems(4)
                             ->multiple()
                             ->preload()
                             ->relationship('areas', 'name'),
