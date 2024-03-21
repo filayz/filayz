@@ -46,9 +46,6 @@ class EditServer extends EditRecord
     protected function getFooterWidgets(): array
     {
         return [
-            ServerResource\Widgets\ServerLogs::make([
-                'server_id' => $this->record?->id
-            ])
         ];
     }
 

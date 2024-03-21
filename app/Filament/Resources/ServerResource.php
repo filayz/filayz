@@ -96,7 +96,9 @@ class ServerResource extends Resource
     public static function getRelations(): array
     {
         return [
+            RelationManagers\LogsRelationManager::class,
             RelationManagers\ModsRelationManager::class,
+            RelationManagers\ItemsRelationManager::class,
             RelationManagers\ModFileEditsRelationManager::class,
         ];
     }
