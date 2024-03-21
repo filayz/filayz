@@ -23,8 +23,19 @@ Filayz helps manage your DayZ dedicated game servers.
 
 ### To Do
 
+- Allow signups.
+- Finish loot drops, KOTH and air drop configuration and writing to server with Loot and Position configurations.
+- Allow loot sets for use with different mods.
+- Test running multiple servers.
 
+### Installation
 
+- Clone the repository `git clone git@github.com:filayz/filayz <website root>`
+- Make sure the website vhost file points to `<website root>/public`
+- Run `php artisan key:generate`
+- Create a database and set the values in `.env` see `.env.example` and the Laravel docs for more information.
+- Run `php artisan migrate --seed`
+- Create a user using `php artisan make:filament-user`, go into your database and toggle `admin` to `1` for this user.
 
 ### Configuration
 
