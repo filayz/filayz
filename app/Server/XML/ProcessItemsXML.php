@@ -6,6 +6,7 @@ use App\Models\Item;
 use App\Models\Item\Area;
 use App\Models\Mission;
 use App\Models\Mod;
+use App\Models\Tier;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
@@ -64,7 +65,14 @@ class ProcessItemsXML
                 Item\Category::query()->whereIn('name', $categories)->pluck('id')
             );
 
-
+            // Only for the Mission will we parse tiers
+            if ($relatesTo instanceof Mission) {
+                $tiers = collect(Arr::get($type, 'tier', []))
+                    ->map(fn (array $usage) => Arr::get($usage, '@attributes.name'));
+                $item->tiers()->sync(
+                    Tier::query()->whereIn('name', $tiers)->pluck('id')
+                );
+            }
         }
     }
 }

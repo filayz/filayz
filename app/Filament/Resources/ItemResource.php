@@ -8,6 +8,7 @@ use App\Models\Item;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -116,7 +117,8 @@ class ItemResource extends Resource
             ])
             ->actions([
                 Tables\Actions\Action::make('clone')
-                    ->label('Copy for server')
+                    ->icon(FilamentIcon::resolve('actions::edit-action') ?? 'heroicon-m-pencil-square')
+                    ->label('Edit')
                     ->visible(fn (Item $record) => $record->replaces_id === null)
                     ->form([
                         Forms\Components\Select::make('server_id')
@@ -131,6 +133,7 @@ class ItemResource extends Resource
                             'tableFilters[server][value]' => $data['server_id']
                         ]));
                     }),
+                Tables\Actions\ViewAction::make()->visible(fn (Item $record) => $record->replaces_id === null),
                 Tables\Actions\EditAction::make()->visible(fn (Item $record) => $record->replaces_id !== null),
                 Tables\Actions\DeleteAction::make()->visible(fn (Item $record) => $record->replaces_id !== null),
             ])

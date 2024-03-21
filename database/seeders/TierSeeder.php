@@ -9,7 +9,7 @@ class TierSeeder extends Seeder
 {
     public function run(): void
     {
-        for ($i = 0; $i <= 17; $i++) {
+        for ($i = 0; $i <= 18; $i++) {
 
             DB::table('tiers')->insert(['name' => "Tier$i", 'description' => "Tier $i"]);
         }

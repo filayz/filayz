@@ -27,6 +27,7 @@ Filayz helps manage your DayZ dedicated game servers.
 - Finish loot drops, KOTH and air drop configuration and writing to server with Loot and Position configurations.
 - Allow loot sets for use with different mods.
 - Test running multiple servers.
+- Tiers are not a global defined list, they depend on the mission (eg deer isle has 18 tiers/zones), whereas chernarus has only 4. These all should be added to the seeder and named properly.
 
 ### Installation
 
