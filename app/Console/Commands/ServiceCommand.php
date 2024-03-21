@@ -5,12 +5,12 @@ namespace App\Console\Commands;
 use App\Models\Mod;
 use App\Models\Server;
 use App\Server\Provisioner;
+use App\Server\Steam\Process;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Console\Isolatable;
 use Illuminate\Process\InvokedProcess;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Process;
 use Illuminate\Support\Str;
 
 class ServiceCommand extends Command implements Isolatable
@@ -105,11 +105,7 @@ class ServiceCommand extends Command implements Isolatable
             $args[] = "-mod=$mods";
         }
 
-        $process = Process::command($args)
-            ->env([
-                'CWD' => $server->path,
-            ])
-            ->path($server->path)
+        $process = Process::make($args, $server->path)
             ->idleTimeout(60 * 10)
             ->forever();
 

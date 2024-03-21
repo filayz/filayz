@@ -2,10 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Mod;
 use App\Models\Server;
+use App\Server\Steam\Process;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Process;
 use Illuminate\Support\Facades\Storage;
 
 class DownloadServerFilesCommand extends Command
@@ -39,8 +38,11 @@ EOM;
 
         Storage::disk('servers')->put("$id/dayz.txt", $txt);
 
-        $process = Process::forever()
-            ->run("steamcmd +runscript $directory/dayz.txt")
+        $process = Process::make([
+            'steamcmd', '+runscript', "$directory/dayz.txt"
+        ], $directory)
+            ->timeout(60 * 10)
+            ->run()
             ->throw();
 
         return $process->exitCode();

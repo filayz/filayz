@@ -3,10 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Models\Server;
-use App\Server\Provisioner;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Process;
 
 class ServerCommand extends Command
 {
