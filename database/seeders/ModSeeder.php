@@ -23,7 +23,7 @@ class ModSeeder extends Seeder
         2116157322 => LoadPriority::normal, // DayZ-Expansion-Licensed
         1710977250 => LoadPriority::normal, // BaseBuildingPlus
         1602372402 => LoadPriority::normal, // DeerIsle
-        2842791521 => LoadPriority::low, // KOTH
+//        2842791521 => LoadPriority::low, // KOTH
         2345073965 => LoadPriority::low, // CJ187-LootChest
         2443122116 => LoadPriority::low, // SNAFU Weapons
         2170927235 => LoadPriority::low, // DrugsPLUS

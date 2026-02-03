@@ -116,11 +116,13 @@ class ModFileSeeder extends Seeder
                 'mod_id' => 1602372402,
                 'type' => ModFileType::bikey,
                 'path' => 'keys/deerisle53.bikey'
-            ],[
-                'mod_id' => 2842791521,
-                'type' => ModFileType::bikey,
-                'path' => 'keys/mdc.bikey'
-            ],[
+            ],
+//            [
+//                'mod_id' => 2842791521,
+//                'type' => ModFileType::bikey,
+//                'path' => 'keys/mdc.bikey'
+//            ],
+            [
                 'mod_id' => 2345073965,
                 'type' => ModFileType::bikey,
                 'path' => 'key/cj187_public.bikey'

@@ -18,7 +18,12 @@ class ModObserver
 
         $crawler = new Crawler($contents);
 
-        $mod->name = $crawler->filter('.workshopItemTitle')->text();
+        try {
+            $mod->name = $crawler->filter('.workshopItemTitle')->text();
+        } catch (\InvalidArgumentException $e) {
+            dump($workshopUri);
+        }
+
         try {
             $mod->image = $crawler->filter('#previewImageMain')->attr('src');
         } catch (\InvalidArgumentException $e) {}
